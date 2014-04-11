@@ -398,18 +398,24 @@ describe("Cucumber.SupportCode.Library", function() {
         expect(worldInstance.constructor).toBe(worldConstructor);
       });
 
-      describe("world constructor callback", function() {
+      describe("world constructor callback without environment", function() {
         var worldConstructorCompletionCallback;
+        var environment;
 
         beforeEach(function() {
           library.instantiateNewWorld(callback);
           worldConstructorCompletionCallback = worldConstructor.mostRecentCall.args[0];
+          environment = worldConstructor.mostRecentCall.args[1]
           spyOn(process, 'nextTick');
         });
 
         it("registers a function for the next tick (to get out of the constructor call)", function() {
           worldConstructorCompletionCallback();
           expect(process.nextTick).toHaveBeenCalledWithAFunctionAsNthParameter(1);
+        });
+
+        it("doesn't forward an environment variable to the world", function () {
+          expect(environment).toEqual(undefined);
         });
 
         describe("next tick registered function", function() {
@@ -442,6 +448,21 @@ describe("Cucumber.SupportCode.Library", function() {
             });
           });
 
+        });
+      });
+
+      describe("world constructor callback with environment", function() {
+        var environment;
+
+        beforeEach(function() {
+          library.instantiateNewWorld(callback, 'FOO');
+          worldConstructorCompletionCallback = worldConstructor.mostRecentCall.args[0];
+          environment = worldConstructor.mostRecentCall.args[1]
+          spyOn(process, 'nextTick');
+        });
+
+        it("forwards an optional environment variable to the world", function () {
+          expect(environment).toEqual('FOO');
         });
       });
     });

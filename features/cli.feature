@@ -92,6 +92,13 @@ Feature: Command line interface
 
       """
 
+  Scenario: run with passing a custom environment variable
+    When I run `cucumber.js --environment foo`
+    Then it should pass with:
+    """
+    foo (no not really, this test is pending)
+    """
+
   Scenario: display Cucumber version
     When I run `cucumber.js --version`
     Then I see the version of Cucumber
@@ -103,3 +110,4 @@ Feature: Command line interface
   Scenario: display help (short flag)
     When I run `cucumber.js -h`
     Then I see the help of Cucumber
+

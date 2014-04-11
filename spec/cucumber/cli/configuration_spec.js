@@ -258,6 +258,23 @@ describe("Cucumber.Cli.Configuration", function () {
     });
   });
 
+  describe("getEnvironment()", function () {
+    beforeEach(function () {
+      spyOnStub(argumentParser, 'getEnvironment');
+    });
+
+    it("asks the argument parser what the environment variable was", function () {
+      configuration.getEnvironment();
+      expect(argumentParser.getEnvironment).toHaveBeenCalled();
+    });
+
+    it("returns the answer from the argument parser", function () {
+      var getEnvironment = createSpy("foo");
+      argumentParser.getEnvironment.andReturn(getEnvironment);
+      expect(configuration.getEnvironment()).toBe(getEnvironment);
+    });
+  });
+
   describe("isHelpRequired()", function () {
     beforeEach(function () {
       spyOnStub(argumentParser, 'isHelpRequested');

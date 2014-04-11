@@ -78,6 +78,11 @@ describe("Cucumber.Cli.ArgumentParser", function () {
       var knownOptionDefinitions = argumentParser.getKnownOptionDefinitions();
       expect(knownOptionDefinitions[Cucumber.Cli.ArgumentParser.VERSION_FLAG_NAME]).toEqual(Boolean);
     });
+
+    it("defines a --environment flag", function () {
+      var knownOptionDefinitions = argumentParser.getKnownOptionDefinitions();
+      expect(knownOptionDefinitions[Cucumber.Cli.ArgumentParser.ENVIRONMENT_OPTION_NAME]).toEqual(String);
+    });
   });
 
   describe("getShortenedOptionDefinitions()", function () {
@@ -105,6 +110,14 @@ describe("Cucumber.Cli.ArgumentParser", function () {
     it("defines an alias to --help as -h", function () {
       var optionName = Cucumber.Cli.ArgumentParser.LONG_OPTION_PREFIX + Cucumber.Cli.ArgumentParser.HELP_FLAG_NAME;
       var aliasName  = Cucumber.Cli.ArgumentParser.HELP_FLAG_SHORT_NAME;
+      var aliasValue = [optionName];
+      var shortenedOptionDefinitions = argumentParser.getShortenedOptionDefinitions();
+      expect(shortenedOptionDefinitions[aliasName]).toEqual(aliasValue);
+    });
+
+    it("defines an alias to --environment as -e", function () {
+      var optionName = Cucumber.Cli.ArgumentParser.LONG_OPTION_PREFIX + Cucumber.Cli.ArgumentParser.ENVIRONMENT_OPTION_NAME;
+      var aliasName  = Cucumber.Cli.ArgumentParser.ENVIRONMENT_OPTION_SHORT_NAME;
       var aliasValue = [optionName];
       var shortenedOptionDefinitions = argumentParser.getShortenedOptionDefinitions();
       expect(shortenedOptionDefinitions[aliasName]).toEqual(aliasValue);

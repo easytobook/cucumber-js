@@ -64,7 +64,8 @@ describe("Cucumber.Runtime", function() {
 
     it("creates a new AST tree walker", function() {
       runtime.start(callback);
-      expect(Cucumber.Runtime.AstTreeWalker).toHaveBeenCalledWith(features, supportCodeLibrary, listeners);
+      expect(Cucumber.Runtime.AstTreeWalker).toHaveBeenCalledWith(
+          features, supportCodeLibrary, listeners, undefined);
     });
 
     it("tells the AST tree walker to walk", function() {

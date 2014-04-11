@@ -14,7 +14,7 @@ describe("Cucumber.Cli", function() {
     var configuration, callback;
 
     beforeEach(function() {
-      configuration = createSpyWithStubs("CLI configuration", {isVersionRequested: false, isHelpRequested: false});
+      configuration = createSpyWithStubs("CLI configuration", {isVersionRequested: false, isHelpRequested: false, environment: 'foo'});
       callback      = createSpy("callback");
       spyOn(Cucumber.Cli, 'Configuration').andReturn(configuration);
       spyOn(cli, 'displayHelp');
@@ -104,6 +104,19 @@ describe("Cucumber.Cli", function() {
           expect(cli.displayVersion).not.toHaveBeenCalledWith(callback);
         });
       });
+
+      /*
+      describe("when environment is specified", function() {
+        beforeEach(function() {
+          configuration.getEnvironment.andReturn('foo');
+        });
+
+        it("runs the suite with environment", function () {
+          cli.run(callback);
+          expect(cli.runSuiteWithConfiguration).toHaveBeenCalled();
+        });
+      });
+      */
     });
   });
 
